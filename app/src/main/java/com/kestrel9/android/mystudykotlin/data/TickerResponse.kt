@@ -1,4 +1,4 @@
-package com.kestrel9.android.mystudykotlin.network.response
+package com.kestrel9.android.mystudykotlin.data
 
 data class TickerResponse(
         val result : String,

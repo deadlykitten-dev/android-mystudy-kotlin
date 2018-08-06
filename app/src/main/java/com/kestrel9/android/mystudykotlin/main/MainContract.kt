@@ -1,9 +1,11 @@
 package com.kestrel9.android.mystudykotlin.main
 
-import com.kestrel9.android.mystudykotlin.network.model.Ask
-import com.kestrel9.android.mystudykotlin.network.model.Bid
-import com.kestrel9.android.mystudykotlin.network.model.CompleteOrder
-import com.kestrel9.android.mystudykotlin.network.response.TickerResponse
+import com.kestrel9.android.mystudykotlin.BasePresenter
+import com.kestrel9.android.mystudykotlin.BaseView
+import com.kestrel9.android.mystudykotlin.model.Ask
+import com.kestrel9.android.mystudykotlin.model.Bid
+import com.kestrel9.android.mystudykotlin.model.CompleteOrder
+import com.kestrel9.android.mystudykotlin.data.TickerResponse
 
 /**
  * MyStudyKotlin
@@ -14,7 +16,7 @@ import com.kestrel9.android.mystudykotlin.network.response.TickerResponse
  */
 interface MainContract {
 
-    interface View{
+    interface View : BaseView<Presenter> {
 
         fun setBidList(bid: MutableList<Bid>)
 
@@ -27,7 +29,8 @@ interface MainContract {
         fun showFailLoad()
     }
 
-    interface Presenter{
+    interface Presenter : BasePresenter {
+
         fun loadApiData()
     }
 }

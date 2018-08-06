@@ -1,7 +1,7 @@
-package com.kestrel9.android.mystudykotlin.network.response
+package com.kestrel9.android.mystudykotlin.data
 
-import com.kestrel9.android.mystudykotlin.network.model.Ask
-import com.kestrel9.android.mystudykotlin.network.model.Bid
+import com.kestrel9.android.mystudykotlin.model.Ask
+import com.kestrel9.android.mystudykotlin.model.Bid
 
 data class OrderBookResponse(
         val timestamp : String,

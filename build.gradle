@@ -13,6 +13,7 @@ ext {
     rulesVersion = '1.0.1'
     espressoVersion = '3.0.1'
     roomVersion = "1.0.0"
+    okhttpVersion = '3.11.0'
 
 }
 

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="order"
-            type="com.kestrel9.android.mystudykotlin.network.model.CompleteOrder" />
+            type="com.kestrel9.android.mystudykotlin.model.CompleteOrder" />
     </data>
 
     <LinearLayout

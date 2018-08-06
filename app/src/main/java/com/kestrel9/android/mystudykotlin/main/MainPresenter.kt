@@ -1,14 +1,10 @@
 package com.kestrel9.android.mystudykotlin.main
 
-import android.util.Log
-import com.kestrel9.android.mystudykotlin.network.CoinOneApi
-import com.kestrel9.android.mystudykotlin.network.model.Ask
-import com.kestrel9.android.mystudykotlin.network.response.OrderBookResponse
-import com.kestrel9.android.mystudykotlin.network.response.TickerResponse
-import com.kestrel9.android.mystudykotlin.network.response.TradesResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.kestrel9.android.mystudykotlin.data.OrderBookResponse
+import com.kestrel9.android.mystudykotlin.data.TickerResponse
+import com.kestrel9.android.mystudykotlin.data.source.CoinDataRepository
+import com.kestrel9.android.mystudykotlin.data.source.CoinDataSource
+import com.kestrel9.android.mystudykotlin.model.CompleteOrder
 
 /**
  * MyStudyKotlin
@@ -18,53 +14,48 @@ import retrofit2.Response
  * Description:
  */
 
-class MainPresenter(private val coinOneApiService: CoinOneApi.CoinOneApiService,
-                    private val view: MainContract.View) : MainContract.Presenter {
+class MainPresenter(private val coinDataRepository: CoinDataRepository,
+                    val view: MainContract.View) : MainContract.Presenter {
+
+    init {
+        view.presenter = this
+    }
+
+    override fun start() {
+        loadApiData()
+    }
 
     override fun loadApiData() {
-        val orderBookResponseCall = coinOneApiService.orderBookResponseCall()
-
-        orderBookResponseCall.enqueue(object : Callback<OrderBookResponse>{
-            override fun onFailure(call: Call<OrderBookResponse>?, t: Throwable?) {
-                Log.d("Main.loadApiData", "onFailure", t)
+        coinDataRepository.getCompleteOrderData(object : CoinDataSource.GetApiDataCallback {
+            override fun <T> onDataLoaded(data: T) {
+                    @Suppress("UNCHECKED_CAST")
+                    view.setOrderList(data as MutableList<CompleteOrder>)
             }
 
-            override fun onResponse(call: Call<OrderBookResponse>, response: Response<OrderBookResponse>) {
-                val orderBookResponse = response.body() ?: return
-                if (orderBookResponse.result == "success"){
-                    view.setAskList(orderBookResponse.ask)
-                    view.setBidList(orderBookResponse.bid)
-                }
+            override fun onDataNotAvailable() {
+                view.showFailLoad()
             }
         })
 
-        val tradesResponseCall = coinOneApiService.tradesResponseCall()
-
-        tradesResponseCall.enqueue(object : Callback<TradesResponse>{
-            override fun onFailure(call: Call<TradesResponse>?, t: Throwable?) {
-                Log.d("Main.loadApiData", "onFailure", t)
+        coinDataRepository.getTickerData(object : CoinDataSource.GetApiDataCallback{
+            override fun <T> onDataLoaded(data: T) {
+                view.setTickerView(data as TickerResponse)
             }
 
-            override fun onResponse(call: Call<TradesResponse>?, response: Response<TradesResponse>) {
-                val tradesResponse = response.body() ?: return
-                if (tradesResponse.result == "success"){
-                    view.setOrderList(tradesResponse.completeOrders)
-                }
+            override fun onDataNotAvailable() {
+                view.showFailLoad()
             }
         })
 
-        val tickerResponseCall = coinOneApiService.tickerResponseCall()
-
-        tickerResponseCall.enqueue(object : Callback<TickerResponse>{
-            override fun onFailure(call: Call<TickerResponse>?, t: Throwable?) {
-                Log.d("Main.loadApiData", "onFailure", t)
+        coinDataRepository.getOrderBookData(object : CoinDataSource.GetApiDataCallback{
+            override fun <T> onDataLoaded(data: T) {
+                val orderBookResponse = data as OrderBookResponse
+                view.setAskList(orderBookResponse.ask)
+                view.setBidList(orderBookResponse.bid)
             }
 
-            override fun onResponse(call: Call<TickerResponse>?, response: Response<TickerResponse>) {
-                val tickerResponse = response.body() ?: return
-                if(tickerResponse.result == "success"){
-                    view.setTickerView(tickerResponse)
-                }
+            override fun onDataNotAvailable() {
+                view.showFailLoad()
             }
         })
     }

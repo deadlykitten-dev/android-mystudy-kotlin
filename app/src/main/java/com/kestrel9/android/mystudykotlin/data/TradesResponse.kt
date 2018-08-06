@@ -1,6 +1,6 @@
-package com.kestrel9.android.mystudykotlin.network.response
+package com.kestrel9.android.mystudykotlin.data
 
-import com.kestrel9.android.mystudykotlin.network.model.CompleteOrder
+import com.kestrel9.android.mystudykotlin.model.CompleteOrder
 
 data class TradesResponse(
         val errorCode : String,

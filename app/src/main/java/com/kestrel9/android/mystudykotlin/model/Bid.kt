@@ -1,4 +1,4 @@
-package com.kestrel9.android.mystudykotlin.network.model
+package com.kestrel9.android.mystudykotlin.model
 
 data class Bid(
         val price : String,

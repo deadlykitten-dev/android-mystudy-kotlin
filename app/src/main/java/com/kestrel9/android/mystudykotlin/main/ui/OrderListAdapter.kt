@@ -9,7 +9,7 @@ import com.kestrel9.android.mystudykotlin.R
 import com.kestrel9.android.mystudykotlin.baseUtil.BaseAdapter
 import com.kestrel9.android.mystudykotlin.baseUtil.BaseViewHolder
 import com.kestrel9.android.mystudykotlin.databinding.RowOrderBinding
-import com.kestrel9.android.mystudykotlin.network.model.CompleteOrder
+import com.kestrel9.android.mystudykotlin.model.CompleteOrder
 
 /**
  * MyStudyKotlin
