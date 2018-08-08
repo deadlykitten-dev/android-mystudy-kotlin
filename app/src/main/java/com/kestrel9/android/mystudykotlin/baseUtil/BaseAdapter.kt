@@ -27,9 +27,8 @@ abstract class BaseAdapter <T : Any, VH : BaseViewHolder<*>> : RecyclerView.Adap
         onBindHolder(holder, position)
     }
 
-    fun setList(list : MutableList<T>){
+    fun setList(list : List<T>){
         items.addAll(list)
-        notifyDataSetChanged()
     }
 
     fun reset() {

@@ -1,5 +1,9 @@
 package com.kestrel9.android.mystudykotlin.data.source
 
+import com.kestrel9.android.mystudykotlin.network.response.OrderBookResponse
+import com.kestrel9.android.mystudykotlin.network.response.TickerResponse
+import com.kestrel9.android.mystudykotlin.network.response.TradesResponse
+
 /**
  * MyStudyKotlin
  * Class: du
@@ -9,17 +13,17 @@ package com.kestrel9.android.mystudykotlin.data.source
 */
 interface CoinDataSource {
 
-    interface GetApiDataCallback{
+    interface GetApiDataCallback<T>{
 
-        fun <T>onDataLoaded(data: T)
+        fun onDataLoaded(data: T)
 
         fun onDataNotAvailable()
     }
 
-    fun getCompleteOrderData(callback: GetApiDataCallback)
+    fun getTradesData(callback: GetApiDataCallback<TradesResponse>)
 
-    fun getOrderBookData(callback: GetApiDataCallback)
+    fun getOrderBookData(callback: GetApiDataCallback<OrderBookResponse>)
 
-    fun getTickerData(callback: GetApiDataCallback)
+    fun getTickerData(callback: GetApiDataCallback<TickerResponse>)
 
 }

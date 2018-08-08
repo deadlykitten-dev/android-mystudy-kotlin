@@ -9,7 +9,7 @@ import com.kestrel9.android.mystudykotlin.R
 import com.kestrel9.android.mystudykotlin.baseUtil.BaseAdapter
 import com.kestrel9.android.mystudykotlin.baseUtil.BaseViewHolder
 import com.kestrel9.android.mystudykotlin.databinding.RowBidBinding
-import com.kestrel9.android.mystudykotlin.model.Bid
+import com.kestrel9.android.mystudykotlin.data.model.Bid
 
 /**
  * MyStudyKotlin

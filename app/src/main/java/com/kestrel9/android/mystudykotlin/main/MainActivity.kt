@@ -9,10 +9,10 @@ import com.kestrel9.android.mystudykotlin.databinding.ActivityMainBinding
 import com.kestrel9.android.mystudykotlin.main.ui.AskListAdapter
 import com.kestrel9.android.mystudykotlin.main.ui.BidListAdapter
 import com.kestrel9.android.mystudykotlin.main.ui.OrderListAdapter
-import com.kestrel9.android.mystudykotlin.model.Ask
-import com.kestrel9.android.mystudykotlin.model.Bid
-import com.kestrel9.android.mystudykotlin.model.CompleteOrder
-import com.kestrel9.android.mystudykotlin.data.TickerResponse
+import com.kestrel9.android.mystudykotlin.data.model.Ask
+import com.kestrel9.android.mystudykotlin.data.model.Bid
+import com.kestrel9.android.mystudykotlin.data.model.CompleteOrder
+import com.kestrel9.android.mystudykotlin.network.response.TickerResponse
 import com.kestrel9.android.mystudykotlin.data.source.CoinDataRepository
 
 
@@ -44,17 +44,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
 
-    override fun setBidList(bid: MutableList<Bid>) {
+    override fun setBidList(bid: List<Bid>) {
         bidListAdapter.setList(bid)
         bidListAdapter.notifyDataSetChanged()
     }
 
-    override fun setAskList(ask: MutableList<Ask>) {
+    override fun setAskList(ask: List<Ask>) {
         askListAdapter.setList(ask)
         askListAdapter.notifyDataSetChanged()
     }
 
-    override fun setOrderList(order: MutableList<CompleteOrder>) {
+    override fun setOrderList(order: List<CompleteOrder>) {
         orderListAdapter.setList(order)
         orderListAdapter.notifyDataSetChanged()
     }

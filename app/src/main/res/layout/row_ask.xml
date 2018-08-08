@@ -4,7 +4,7 @@
     <data>
         <variable
             name="ask"
-            type="com.kestrel9.android.mystudykotlin.model.Ask"/>
+            type="com.kestrel9.android.mystudykotlin.data.model.Ask"/>
     </data>
 
     <LinearLayout

@@ -10,7 +10,7 @@ import com.kestrel9.android.mystudykotlin.baseUtil.BaseAdapter
 
 import com.kestrel9.android.mystudykotlin.baseUtil.BaseViewHolder
 import com.kestrel9.android.mystudykotlin.databinding.RowAskBinding
-import com.kestrel9.android.mystudykotlin.model.Ask
+import com.kestrel9.android.mystudykotlin.data.model.Ask
 
 /**
  * MyStudyKotlin

@@ -1,7 +1,6 @@
 package com.kestrel9.android.mystudykotlin.network
 
 import com.kestrel9.android.mystudykotlin.contract.API
-import com.kestrel9.android.mystudykotlin.data.source.remote.CoinOneApiService
 
 /**
  * MyStudyKotlin

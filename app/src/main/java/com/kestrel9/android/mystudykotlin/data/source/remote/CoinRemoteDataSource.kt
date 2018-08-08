@@ -1,9 +1,8 @@
 package com.kestrel9.android.mystudykotlin.data.source.remote
 
-import android.util.Log
-import com.kestrel9.android.mystudykotlin.data.OrderBookResponse
-import com.kestrel9.android.mystudykotlin.data.TickerResponse
-import com.kestrel9.android.mystudykotlin.data.TradesResponse
+import com.kestrel9.android.mystudykotlin.network.response.OrderBookResponse
+import com.kestrel9.android.mystudykotlin.network.response.TickerResponse
+import com.kestrel9.android.mystudykotlin.network.response.TradesResponse
 import com.kestrel9.android.mystudykotlin.data.source.CoinDataSource
 import com.kestrel9.android.mystudykotlin.network.CoinOneApi.coinOneApiService
 import retrofit2.Call
@@ -19,7 +18,7 @@ import retrofit2.Response
  */
 object CoinRemoteDataSource {
 
-    fun tradesResponseCall(callback: CoinDataSource.GetApiDataCallback) {
+    fun tradesResponseCall(callback: CoinDataSource.GetApiDataCallback<TradesResponse>) {
         val tradesResponseCall = coinOneApiService.tradesResponseCall()
         tradesResponseCall.enqueue(object : Callback<TradesResponse> {
             override fun onFailure(call: Call<TradesResponse>?, t: Throwable?) {
@@ -29,13 +28,13 @@ object CoinRemoteDataSource {
             override fun onResponse(call: Call<TradesResponse>?, response: Response<TradesResponse>) {
                 val tradesResponse = response.body() ?: return
                 if (tradesResponse.result == "success") {
-                    callback.onDataLoaded(tradesResponse.completeOrders)
+                    callback.onDataLoaded(tradesResponse)
                 }
             }
         })
     }
 
-    fun orderBookResponseCall(callback: CoinDataSource.GetApiDataCallback) {
+    fun orderBookResponseCall(callback: CoinDataSource.GetApiDataCallback<OrderBookResponse>) {
         val orderBookResponseCall = coinOneApiService.orderBookResponseCall()
         orderBookResponseCall.enqueue(object : Callback<OrderBookResponse> {
             override fun onFailure(call: Call<OrderBookResponse>?, t: Throwable?) {
@@ -52,7 +51,7 @@ object CoinRemoteDataSource {
         })
     }
 
-    fun tickerResponseCall(callback: CoinDataSource.GetApiDataCallback) {
+    fun tickerResponseCall(callback: CoinDataSource.GetApiDataCallback<TickerResponse>) {
         val tickerResponseCall = coinOneApiService.tickerResponseCall()
         tickerResponseCall.enqueue(object : Callback<TickerResponse>{
             override fun onFailure(call: Call<TickerResponse>?, t: Throwable?) {

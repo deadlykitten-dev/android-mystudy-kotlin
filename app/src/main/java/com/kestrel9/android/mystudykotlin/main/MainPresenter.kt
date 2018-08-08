@@ -1,10 +1,10 @@
 package com.kestrel9.android.mystudykotlin.main
 
-import com.kestrel9.android.mystudykotlin.data.OrderBookResponse
-import com.kestrel9.android.mystudykotlin.data.TickerResponse
+import com.kestrel9.android.mystudykotlin.network.response.OrderBookResponse
+import com.kestrel9.android.mystudykotlin.network.response.TickerResponse
 import com.kestrel9.android.mystudykotlin.data.source.CoinDataRepository
 import com.kestrel9.android.mystudykotlin.data.source.CoinDataSource
-import com.kestrel9.android.mystudykotlin.model.CompleteOrder
+import com.kestrel9.android.mystudykotlin.network.response.TradesResponse
 
 /**
  * MyStudyKotlin
@@ -26,32 +26,32 @@ class MainPresenter(private val coinDataRepository: CoinDataRepository,
     }
 
     override fun loadApiData() {
-        coinDataRepository.getCompleteOrderData(object : CoinDataSource.GetApiDataCallback {
-            override fun <T> onDataLoaded(data: T) {
-                    @Suppress("UNCHECKED_CAST")
-                    view.setOrderList(data as MutableList<CompleteOrder>)
+        coinDataRepository.getTradesData(object : CoinDataSource.GetApiDataCallback<TradesResponse>{
+            override fun onDataLoaded(data: TradesResponse) {
+                view.setOrderList(data.completeOrders)
             }
 
             override fun onDataNotAvailable() {
                 view.showFailLoad()
+
             }
         })
 
-        coinDataRepository.getTickerData(object : CoinDataSource.GetApiDataCallback{
-            override fun <T> onDataLoaded(data: T) {
-                view.setTickerView(data as TickerResponse)
+        coinDataRepository.getTickerData(object : CoinDataSource.GetApiDataCallback<TickerResponse>{
+            override fun onDataLoaded(data: TickerResponse) {
+                view.setTickerView(data)
             }
 
             override fun onDataNotAvailable() {
                 view.showFailLoad()
+
             }
         })
 
-        coinDataRepository.getOrderBookData(object : CoinDataSource.GetApiDataCallback{
-            override fun <T> onDataLoaded(data: T) {
-                val orderBookResponse = data as OrderBookResponse
-                view.setAskList(orderBookResponse.ask)
-                view.setBidList(orderBookResponse.bid)
+        coinDataRepository.getOrderBookData(object : CoinDataSource.GetApiDataCallback<OrderBookResponse> {
+            override fun onDataLoaded(data: OrderBookResponse) {
+                view.setAskList(data.ask)
+                view.setBidList(data.bid)
             }
 
             override fun onDataNotAvailable() {

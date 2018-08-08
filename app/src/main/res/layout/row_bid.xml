@@ -5,7 +5,7 @@
 
         <variable
             name="bid"
-            type="com.kestrel9.android.mystudykotlin.model.Bid" />
+            type="com.kestrel9.android.mystudykotlin.data.model.Bid" />
     </data>
 
     <LinearLayout

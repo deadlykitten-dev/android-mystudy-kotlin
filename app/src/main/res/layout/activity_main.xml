@@ -8,7 +8,7 @@
 
         <variable
             name="ticker"
-            type="com.kestrel9.android.mystudykotlin.data.TickerResponse" />
+            type="com.kestrel9.android.mystudykotlin.network.response.TickerResponse" />
     </data>
 
     <LinearLayout

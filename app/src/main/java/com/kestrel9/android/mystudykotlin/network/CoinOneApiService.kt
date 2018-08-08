@@ -1,8 +1,8 @@
-package com.kestrel9.android.mystudykotlin.data.source.remote
+package com.kestrel9.android.mystudykotlin.network
 
-import com.kestrel9.android.mystudykotlin.data.OrderBookResponse
-import com.kestrel9.android.mystudykotlin.data.TickerResponse
-import com.kestrel9.android.mystudykotlin.data.TradesResponse
+import com.kestrel9.android.mystudykotlin.network.response.OrderBookResponse
+import com.kestrel9.android.mystudykotlin.network.response.TickerResponse
+import com.kestrel9.android.mystudykotlin.network.response.TradesResponse
 import retrofit2.Call
 import retrofit2.http.GET
 
