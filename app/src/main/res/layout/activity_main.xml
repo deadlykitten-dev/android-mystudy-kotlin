@@ -7,8 +7,12 @@
     <data>
 
         <variable
+            name="row"
+            type="com.kestrel9.android.mystudykotlin.viewmodel.RowViewModel"/>
+
+        <variable
             name="ticker"
-            type="com.kestrel9.android.mystudykotlin.network.response.TickerResponse" />
+            type="com.kestrel9.android.mystudykotlin.viewmodel.TickerViewModel" />
     </data>
 
     <LinearLayout
@@ -30,6 +34,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_ask"
+                    replaceAll="@{row.ask}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
@@ -53,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text='@{String.format("%,d",ticker.last)}'
+                    android:text='@{String.format("%,d",ticker.model.last)}'
                     tools:text="7,134,500" />
 
                 <TextView
@@ -66,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text='@{String.format("%,d",ticker.first)}'
+                    android:text='@{String.format("%,d",ticker.model.first)}'
                     tools:text="7,134,500" />
 
 
@@ -80,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text='@{String.format("%+,d \n %+.2f%%",(ticker.last - ticker.first),(Double.valueOf((ticker.last - ticker.first)) * 100 / ticker.first))}'
+                    android:text='@{String.format("%+,d \n %+.2f%%",(ticker.model.last - ticker.model.first),(Double.valueOf((ticker.model.last - ticker.model.first)) * 100 / ticker.model.first))}'
                     tools:text="+7,134,500\n+0.099" />
 
 
@@ -94,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text='@{String.format("%,d",ticker.high)}'
+                    android:text='@{String.format("%,d",ticker.model.high)}'
                     tools:text="7,134,500" />
 
 
@@ -108,7 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text='@{String.format("%,d",ticker.low)}'
+                    android:text='@{String.format("%,d",ticker.model.low)}'
                     tools:text="7,134,500" />
 
 
@@ -122,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text='@{String.format("%,.0f",ticker.volume)}'
+                    android:text='@{String.format("%,.0f",ticker.model.volume)}'
                     tools:text="500" />
 
             </LinearLayout>
@@ -143,6 +148,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_order"
+                    replaceAll="@{row.completeOrder}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
@@ -157,6 +163,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_bid"
+                    replaceAll="@{row.bid}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"

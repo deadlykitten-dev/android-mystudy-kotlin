@@ -27,15 +27,15 @@ class MainPresenter(private val coinDataRepository: CoinDataRepository,
 
     override fun loadApiData() {
         coinDataRepository.getTradesData(object : CoinDataSource.GetApiDataCallback<TradesResponse>{
-            override fun onDataLoaded(data: TradesResponse) {
-                view.setOrderList(data.completeOrders)
-            }
+                    override fun onDataLoaded(data: TradesResponse) {
+                        view.setOrderList(data.completeOrders)
+                    }
 
-            override fun onDataNotAvailable() {
-                view.showFailLoad()
+                    override fun onDataNotAvailable() {
+                        view.showFailLoad()
 
-            }
-        })
+                    }
+                })
 
         coinDataRepository.getTickerData(object : CoinDataSource.GetApiDataCallback<TickerResponse>{
             override fun onDataLoaded(data: TickerResponse) {
@@ -48,14 +48,14 @@ class MainPresenter(private val coinDataRepository: CoinDataRepository,
             }
         })
 
-        coinDataRepository.getOrderBookData(object : CoinDataSource.GetApiDataCallback<OrderBookResponse> {
-            override fun onDataLoaded(data: OrderBookResponse) {
-                view.setAskList(data.ask)
-                view.setBidList(data.bid)
-            }
+                coinDataRepository.getOrderBookData(object : CoinDataSource.GetApiDataCallback<OrderBookResponse> {
+                    override fun onDataLoaded(data: OrderBookResponse) {
+                        view.setAskList(data.ask)
+                        view.setBidList(data.bid)
+                    }
 
-            override fun onDataNotAvailable() {
-                view.showFailLoad()
+                    override fun onDataNotAvailable() {
+                        view.showFailLoad()
             }
         })
     }

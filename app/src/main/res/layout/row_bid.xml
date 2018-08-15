@@ -8,8 +8,7 @@
             type="com.kestrel9.android.mystudykotlin.data.model.Bid" />
     </data>
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/row_bid"
         android:layout_width="match_parent"
@@ -23,6 +22,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/colorBid"
+            android:text="@{bid.price}"
             tools:text="0.0014" />
 
         <TextView
@@ -32,6 +32,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/colorBid"
+            android:text="@{bid.qty}"
             tools:text="7,199,500" />
 
     </LinearLayout>

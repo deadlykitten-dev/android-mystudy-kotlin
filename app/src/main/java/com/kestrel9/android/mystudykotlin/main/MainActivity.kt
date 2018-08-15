@@ -1,69 +1,84 @@
 package com.kestrel9.android.mystudykotlin.main
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
+import android.support.v7.widget.RecyclerView
+import android.view.ViewGroup
 import com.kestrel9.android.mystudykotlin.R
-import com.kestrel9.android.mystudykotlin.databinding.ActivityMainBinding
-import com.kestrel9.android.mystudykotlin.main.ui.AskListAdapter
-import com.kestrel9.android.mystudykotlin.main.ui.BidListAdapter
-import com.kestrel9.android.mystudykotlin.main.ui.OrderListAdapter
+import com.kestrel9.android.mystudykotlin.baseUtil.BaseActivity
+import com.kestrel9.android.mystudykotlin.baseUtil.BaseRecyclerViewAdapter
+import com.kestrel9.android.mystudykotlin.baseUtil.BaseViewHolder
 import com.kestrel9.android.mystudykotlin.data.model.Ask
 import com.kestrel9.android.mystudykotlin.data.model.Bid
 import com.kestrel9.android.mystudykotlin.data.model.CompleteOrder
-import com.kestrel9.android.mystudykotlin.network.response.TickerResponse
+import com.kestrel9.android.mystudykotlin.databinding.ActivityMainBinding
 import com.kestrel9.android.mystudykotlin.data.source.CoinDataRepository
+import com.kestrel9.android.mystudykotlin.databinding.RowAskBinding
+import com.kestrel9.android.mystudykotlin.databinding.RowBidBinding
+import com.kestrel9.android.mystudykotlin.databinding.RowOrderBinding
+import com.kestrel9.android.mystudykotlin.viewmodel.RowViewModel
+import com.kestrel9.android.mystudykotlin.viewmodel.TickerViewModel
 
 
-class MainActivity : AppCompatActivity(), MainContract.View {
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
-    override lateinit var presenter: MainContract.Presenter
+    private val tickerViewModel by lazy {
+        TickerViewModel(CoinDataRepository())
+    }
 
-    private var mainBinding: ActivityMainBinding? = null
-
-    private val askListAdapter = AskListAdapter()
-    private val bidListAdapter = BidListAdapter()
-    private val orderListAdapter = OrderListAdapter()
+    private val rowViewModel by lazy {
+        RowViewModel(CoinDataRepository())
+    }
 
     override fun onResume() {
         super.onResume()
-        presenter.start()
+        binding.ticker?.start()
+        binding.row?.start()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        presenter = MainPresenter(CoinDataRepository(), this)
-
-        mainBinding!!.recyclerAsk.adapter = askListAdapter
-        mainBinding!!.recyclerBid.adapter = bidListAdapter
-        mainBinding!!.recyclerOrder.adapter = orderListAdapter
+        binding.run {
+            ticker = tickerViewModel
+            row = rowViewModel
+            recyclerAsk.run {
+                adapter = object : BaseRecyclerViewAdapter<Ask>() {
+                    override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder =
+                            object : BaseViewHolder<Ask, RowAskBinding>(R.layout.row_ask, parent) {
+                                override fun onViewCreated(item: Ask?) {
+                                    binding?.run {
+                                        ask = item
+                                    }
+                                }
+                            }
+                }
+            }
+            recyclerBid.run {
+                adapter = object : BaseRecyclerViewAdapter<Bid>() {
+                    override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder =
+                            object : BaseViewHolder<Bid, RowBidBinding>(R.layout.row_bid, parent) {
+                                override fun onViewCreated(item: Bid?) {
+                                    binding?.run {
+                                        bid = item
+                                    }
+                                }
+                            }
+                }
+            }
+            recyclerOrder.run {
+                adapter = object : BaseRecyclerViewAdapter<CompleteOrder>() {
+                    override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder =
+                            object : BaseViewHolder<CompleteOrder, RowOrderBinding>(R.layout.row_order, parent) {
+                                override fun onViewCreated(item: CompleteOrder?) {
+                                    binding?.run {
+                                        order = item
+                                    }
+                                }
+                            }
+                }
+            }
+        }
 
     }
 
-
-    override fun setBidList(bid: List<Bid>) {
-        bidListAdapter.setList(bid)
-        bidListAdapter.notifyDataSetChanged()
-    }
-
-    override fun setAskList(ask: List<Ask>) {
-        askListAdapter.setList(ask)
-        askListAdapter.notifyDataSetChanged()
-    }
-
-    override fun setOrderList(order: List<CompleteOrder>) {
-        orderListAdapter.setList(order)
-        orderListAdapter.notifyDataSetChanged()
-    }
-
-    override fun setTickerView(ticker: TickerResponse) {
-        mainBinding!!.ticker = ticker
-    }
-
-    override fun showFailLoad() {
-        Toast.makeText(this, getString(R.string.text_fail), Toast.LENGTH_LONG).show()
-    }
 }
